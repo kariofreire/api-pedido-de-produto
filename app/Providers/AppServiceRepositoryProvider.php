@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\Clientes\ClientesRepository;
 use App\Repositories\Contracts\ClientesRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
