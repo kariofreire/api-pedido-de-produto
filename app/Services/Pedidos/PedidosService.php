@@ -3,6 +3,8 @@
 namespace App\Services\Pedidos;
 
 use App\Repositories\Contracts\PedidosRepositoryInterface;
+use App\Utils\FormatForm;
+use App\Validation\RequestPedidos;
 use Illuminate\Http\Request;
 
 class PedidosService
@@ -47,6 +49,26 @@ class PedidosService
     {
         try {
             return $this->repository->show($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
+     * Realiza o cadastro de um pedido.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Database\Eloquent\Model|$this
+     */
+    public function store(Request $request)
+    {
+        try {
+            $dados = FormatForm::formatPedidos($request);
+
+            RequestPedidos::validarDados($dados);
+
+            return $this->repository->store($dados);
         } catch (\Throwable $th) {
             throw $th;
         }

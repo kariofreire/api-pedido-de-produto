@@ -3,6 +3,10 @@
 namespace App\Services\Carrinhos;
 
 use App\Repositories\Contracts\CarrinhosRepositoryInterface;
+use App\Utils\FormatForm;
+use App\Validation\RequestCarrinhos;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CarrinhosService
 {
@@ -18,4 +22,33 @@ class CarrinhosService
 	{
 		$this->repository = $carrinhosRepository;
 	}
+
+    /**
+     * Realiza o cadastro de um carrinho.
+     *
+     * @param Request $request
+     *
+     * @return Array
+     */
+    public function store(Request $request)
+    {
+        try {
+            $dados = FormatForm::formatCarrinhos($request);
+
+            DB::beginTransaction();
+
+            foreach ($dados as $carrinho) {
+                RequestCarrinhos::validarDados($carrinho);
+
+                $this->repository->store($carrinho);
+
+                DB::commit();
+            }
+
+            return $dados;
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+    }
 }

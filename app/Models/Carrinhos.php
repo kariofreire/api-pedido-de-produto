@@ -24,7 +24,7 @@ class Carrinhos extends Model
      */
     protected $fillable = [
         "quantidade",
-        "valor_total",
+        "valor",
         "produto_id",
         "pedido_id"
     ];

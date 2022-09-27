@@ -38,5 +38,6 @@ Route::prefix("v1")->group(function () {
     Route::prefix("pedidos")->name("pedidos.")->group(function () {
         Route::get("/", [ApiPedidosController::class, "index"])->name("index");
         Route::get("/{id}", [ApiPedidosController::class, "show"])->name("show");
+        Route::post("/", [ApiPedidosController::class, "store"])->name("store");
     });
 });
