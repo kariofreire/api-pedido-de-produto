@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\ApiClientesController;
+use App\Http\Controllers\Api\v1\ApiProdutosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,5 +22,14 @@ Route::prefix("v1")->group(function () {
         Route::post("/", [ApiClientesController::class, "store"])->name("store");
         Route::put("/{id}", [ApiClientesController::class, "update"])->name("update");
         Route::delete("/{id}", [ApiClientesController::class, "delete"])->name("delete");
+    });
+
+    /** Produtos */
+    Route::prefix("produtos")->name("produtos.")->group(function () {
+        Route::get("/", [ApiProdutosController::class, "index"])->name("index");
+        Route::get("/{id}", [ApiProdutosController::class, "show"])->name("show");
+        Route::post("/", [ApiProdutosController::class, "store"])->name("store");
+        Route::put("/{id}", [ApiProdutosController::class, "update"])->name("update");
+        Route::delete("/{id}", [ApiProdutosController::class, "delete"])->name("delete");
     });
 });
