@@ -22,7 +22,6 @@ class Clientes extends Model
      * @var array
      */
     protected $fillable = [
-        "codigo_cliente",
         "nome",
         "cpf",
         "sexo",
