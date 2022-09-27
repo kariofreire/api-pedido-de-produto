@@ -33,4 +33,24 @@ class FormatForm
             }
         })->filter()->toArray();
     }
+
+    /**
+     * Formata valores de campos que vem do formulário de produtos.
+     *
+     * @param Request $request
+     *
+     * @return Array
+     */
+    public static function formatProdutos(Request $request) : array
+    {
+        return collect($request)->map(function ($dados, $key) {
+            switch ($key) {
+                case "valor":
+                    return substr_replace(preg_replace("/[^0-9]/", "", trim($dados)), '.', -2, 0);
+
+                default:
+                    return $dados;
+            }
+        })->filter()->toArray();
+    }
 }
