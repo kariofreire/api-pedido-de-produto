@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Exceptions\ValidationException;
 use App\Helpers\ReturnResponse;
 use App\Http\Controllers\Controller;
 use App\Services\Clientes\ClientesService;
@@ -58,6 +59,26 @@ class ApiClientesController extends Controller
             return ReturnResponse::success("Dados retornados com sucesso.", $dados);
         } catch (\Exception $e) {
             return ReturnResponse::error("Não foi possível retornar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Realiza o cadastro de um cliente.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function store(Request $request) : JsonResponse
+    {
+        try {
+            $dados = $this->service->store($request);
+
+            return ReturnResponse::success("Dados cadastrados com sucesso.", $dados);
+        } catch (ValidationException $e) {
+            return ReturnResponse::warning($e->getMessage(), [], $e->getCode());
+        } catch (\Exception $e) {
+            return ReturnResponse::error("Não foi possível cadastrar os dados.", ["erro" => $e->getMessage()]);
         }
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Services\Clientes;
 
 use App\Repositories\Contracts\ClientesRepositoryInterface;
+use App\Utils\FormatForm;
+use App\Validation\RequestClientes;
 use Illuminate\Http\Request;
 
 class ClientesService
@@ -47,6 +49,26 @@ class ClientesService
     {
         try {
             return $this->repository->show($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
+     * Realiza o cadastro de um cliente.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Database\Eloquent\Model|$this
+     */
+    public function store(Request $request)
+    {
+        try {
+            $dados = FormatForm::formatClientes($request);
+
+            RequestClientes::validarDados($dados);
+
+            return $this->repository->store($dados);
         } catch (\Throwable $th) {
             throw $th;
         }
