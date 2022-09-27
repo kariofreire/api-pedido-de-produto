@@ -15,10 +15,10 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->id()->comment("Código do cliente.");
-            $table->string("nome")->comment("Nome do cliente.");
-            $table->string("cpf", 11)->comment("Cadastro de Pessoa Física do cliente.");
-            $table->enum("sexo", ["masculino", "feminino"])->comment("Sexo do cliente, lembrando que, sexo está relacionado às distinções anatômicas e biológicas entre homens e mulheres.");
-            $table->string("email")->comment("Email do cliente");
+            $table->string("nome")->nullable(false)->comment("Nome do cliente.");
+            $table->string("cpf", 11)->unique()->nullable(false)->comment("Cadastro de Pessoa Física do cliente.");
+            $table->enum("sexo", ["masculino", "feminino", "prefiro não informar"])->default("prefiro não informar")->comment("Sexo do cliente, considerando que, sexo está relacionado às distinções anatômicas e biológicas entre homens e mulheres.");
+            $table->string("email")->unique()->nullable(false)->comment("Email do cliente");
             $table->timestamps();
         });
     }
