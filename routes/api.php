@@ -28,5 +28,6 @@ Route::prefix("v1")->group(function () {
     Route::prefix("produtos")->name("produtos.")->group(function () {
         Route::get("/", [ApiProdutosController::class, "index"])->name("index");
         Route::get("/{id}", [ApiProdutosController::class, "show"])->name("show");
+        Route::post("/", [ApiProdutosController::class, "store"])->name("store");
     });
 });

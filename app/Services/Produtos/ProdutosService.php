@@ -3,6 +3,8 @@
 namespace App\Services\Produtos;
 
 use App\Repositories\Contracts\ProdutosRepositoryInterface;
+use App\Utils\FormatForm;
+use App\Validation\RequestProdutos;
 use Illuminate\Http\Request;
 
 class ProdutosService
@@ -47,6 +49,26 @@ class ProdutosService
     {
         try {
             return $this->repository->show($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
+     * Realiza o cadastro de um produto.
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Database\Eloquent\Model|$this
+     */
+    public function store(Request $request)
+    {
+        try {
+            $dados = FormatForm::formatProdutos($request);
+
+            RequestProdutos::validarDados($dados);
+
+            return $this->repository->store($dados);
         } catch (\Throwable $th) {
             throw $th;
         }
