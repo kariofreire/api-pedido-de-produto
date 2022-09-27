@@ -4,6 +4,7 @@ namespace App\Services\Produtos;
 
 use App\Repositories\Contracts\ProdutosRepositoryInterface;
 use App\Utils\FormatForm;
+use App\Validation\RequestClientes;
 use App\Validation\RequestProdutos;
 use Illuminate\Http\Request;
 
@@ -69,6 +70,27 @@ class ProdutosService
             RequestProdutos::validarDados($dados);
 
             return $this->repository->store($dados);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
+     * Atualiza dados de um produto.
+     *
+     * @param Int $id
+     * @param Request $request
+     *
+     * @return Bool
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $dados = FormatForm::formatProdutos($request);
+
+            RequestProdutos::validarDados($dados);
+
+            return $this->repository->update($id, $dados);
         } catch (\Throwable $th) {
             throw $th;
         }
