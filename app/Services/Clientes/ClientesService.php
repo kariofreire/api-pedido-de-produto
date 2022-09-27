@@ -94,4 +94,20 @@ class ClientesService
             throw $th;
         }
     }
+
+    /**
+     * Remove dados de um cliente.
+     *
+     * @param Int $id
+     *
+     * @return Bool
+     */
+    public function delete(int $id)
+    {
+        try {
+            return $this->repository->delete($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
