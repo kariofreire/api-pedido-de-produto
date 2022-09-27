@@ -14,14 +14,11 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->id();
-
-            $table->string("codigo_cliente", 8)->comment("Código do cliente.");
+            $table->id()->comment("Código do cliente.");
             $table->string("nome")->comment("Nome do cliente.");
             $table->string("cpf", 11)->comment("Cadastro de Pessoa Física do cliente.");
             $table->enum("sexo", ["masculino", "feminino"])->comment("Sexo do cliente, lembrando que, sexo está relacionado às distinções anatômicas e biológicas entre homens e mulheres.");
             $table->string("email")->comment("Email do cliente");
-
             $table->timestamps();
         });
     }
