@@ -102,4 +102,22 @@ class ApiProdutosController extends Controller
             return ReturnResponse::error("Não foi possível atualizar os dados.", ["erro" => $e->getMessage()]);
         }
     }
+
+    /**
+     * Realiza remoção de um produto.
+     *
+     * @param Int $id
+     *
+     * @return JsonResponse
+     */
+    public function delete(int $id) : JsonResponse
+    {
+        try {
+            $dados = $this->service->delete($id);
+
+            return ReturnResponse::success("Dados removidos com sucesso.", $dados);
+        } catch (\Exception $e) {
+            return ReturnResponse::error("Não foi possível remover os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
 }

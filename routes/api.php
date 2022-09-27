@@ -30,5 +30,6 @@ Route::prefix("v1")->group(function () {
         Route::get("/{id}", [ApiProdutosController::class, "show"])->name("show");
         Route::post("/", [ApiProdutosController::class, "store"])->name("store");
         Route::put("/{id}", [ApiProdutosController::class, "update"])->name("update");
+        Route::delete("/{id}", [ApiProdutosController::class, "delete"])->name("delete");
     });
 });
