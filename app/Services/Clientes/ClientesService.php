@@ -73,4 +73,25 @@ class ClientesService
             throw $th;
         }
     }
+
+    /**
+     * Atualiza dados de um cliente.
+     *
+     * @param Int $id
+     * @param Request $request
+     *
+     * @return Bool
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $dados = FormatForm::formatClientes($request);
+
+            RequestClientes::validarDados($dados, $id);
+
+            return $this->repository->update($id, $dados);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

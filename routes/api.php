@@ -19,5 +19,6 @@ Route::prefix("v1")->group(function () {
         Route::get("/", [ApiClientesController::class, "index"])->name("index");
         Route::get("/{id}", [ApiClientesController::class, "show"])->name("show");
         Route::post("/", [ApiClientesController::class, "store"])->name("store");
+        Route::put("/{id}", [ApiClientesController::class, "update"])->name("update");
     });
 });

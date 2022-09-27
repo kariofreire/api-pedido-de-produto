@@ -81,4 +81,25 @@ class ApiClientesController extends Controller
             return ReturnResponse::error("Não foi possível cadastrar os dados.", ["erro" => $e->getMessage()]);
         }
     }
+
+    /**
+     * Realiza atualização de dados de um cliente.
+     *
+     * @param Request $request
+     * @param Int $id
+     *
+     * @return JsonResponse
+     */
+    public function update(Request $request, int $id) : JsonResponse
+    {
+        try {
+            $dados = $this->service->update($request, $id);
+
+            return ReturnResponse::success("Dados atualizados com sucesso.", $dados);
+        } catch (ValidationException $e) {
+            return ReturnResponse::warning($e->getMessage(), [], $e->getCode());
+        } catch (\Exception $e) {
+            return ReturnResponse::error("Não foi possível atualizar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
 }

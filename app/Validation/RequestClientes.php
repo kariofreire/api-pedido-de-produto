@@ -5,6 +5,7 @@ namespace App\Validation;
 use App\Exceptions\ValidationException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RequestClientes
 {
@@ -12,16 +13,17 @@ class RequestClientes
      * Realiza validação dos dados de Clientes.
      *
      * @param Array $dados
+     * @param Int $id
      *
      * @return Void
      */
-    public static function validarDados(array $dados) : void
+    public static function validarDados(array $dados, int $id = 0) : void
     {
         $regras = [
             'nome'  => ['required'],
-            'cpf'   => ['required', 'size:11', 'unique:clientes'],
+            'cpf'   => ['required', 'size:11', Rule::unique("clientes")->ignore($id, "id")],
             'sexo'  => ['required'],
-            'email' => ['required', 'email', 'unique:clientes'],
+            'email' => ['required', 'email', Rule::unique("clientes")->ignore($id, "id")],
         ];
 
         $mensagens = [
