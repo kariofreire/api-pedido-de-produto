@@ -18,6 +18,7 @@ class CreatePedidosTable extends Migration
             $table->date("data_pedido")->nullable(false)->comment("Data do pedido.");
             $table->text("observacao")->nullable()->comment("Observação do pedido.");
             $table->enum("forma_pagamento", ["dinheiro", "cartão", "cheque"])->default("dinheiro")->comment("Forma de pagamento do pedido.");
+            $table->decimal("valor_total", 11, 2)->nullable(false)->comment("Preço total do pedido.");
             $table->unsignedBigInteger("cliente_id")->nullable(false)->comment("Coluna que realiza relacionamento com a tabela de clientes.");
             $table->timestamps();
         });
