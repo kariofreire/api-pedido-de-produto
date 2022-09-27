@@ -22,9 +22,9 @@ class ClientesService
 
 	/**
 	 * Retorna lista de clientes por filtro.
-	 * 
+	 *
 	 * @param Request $request
-	 * 
+	 *
 	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
 	 */
 	public function getAllFilter(Request $request)
@@ -35,4 +35,20 @@ class ClientesService
 			throw $th;
 		}
 	}
+
+    /**
+     * Retorna dados do cliente pelo id.
+     *
+     * @param Int $id
+     *
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
+     */
+    public function show(int $id)
+    {
+        try {
+            return $this->repository->show($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

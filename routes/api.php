@@ -17,5 +17,6 @@ Route::prefix("v1")->group(function () {
     /** Clientes */
     Route::prefix("clientes")->name("clientes.")->group(function () {
         Route::get("/", [ApiClientesController::class, "index"])->name("index");
+        Route::get("/{id}", [ApiClientesController::class, "show"])->name("show");
     });
 });

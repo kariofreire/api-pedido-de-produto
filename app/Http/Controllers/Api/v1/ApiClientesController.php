@@ -26,7 +26,7 @@ class ApiClientesController extends Controller
     }
 
     /**
-     * Retorna todas as categorias em JSON.
+     * Retorna todas os clientes.
      *
      * @param Request $request
      *
@@ -36,6 +36,24 @@ class ApiClientesController extends Controller
     {
         try {
             $dados = $this->service->getAllFilter($request);
+
+            return ReturnResponse::success("Dados retornados com sucesso.", $dados);
+        } catch (\Exception $e) {
+            return ReturnResponse::error("Não foi possível retornar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Retorna cliente pelo ID.
+     *
+     * @param Int $id
+     *
+     * @return JsonResponse
+     */
+    public function show(int $id) : JsonResponse
+    {
+        try {
+            $dados = $this->service->show($id);
 
             return ReturnResponse::success("Dados retornados com sucesso.", $dados);
         } catch (\Exception $e) {
