@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\Carrinhos\CarrinhosRepository;
 use App\Repositories\Clientes\ClientesRepository;
+use App\Repositories\Contracts\CarrinhosRepositoryInterface;
 use App\Repositories\Contracts\ClientesRepositoryInterface;
 use App\Repositories\Contracts\PedidosRepositoryInterface;
 use App\Repositories\Contracts\ProdutosRepositoryInterface;
@@ -27,6 +29,9 @@ class AppServiceRepositoryProvider extends ServiceProvider
 
         /** Pedidos */
         $this->app->bind(PedidosRepositoryInterface::class, PedidosRepository::class);
+
+        /** Carrinhos */
+        $this->app->bind(CarrinhosRepositoryInterface::class, CarrinhosRepository::class);
     }
 
     /**

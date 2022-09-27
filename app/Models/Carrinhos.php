@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Pedidos extends Model
+class Carrinhos extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Pedidos extends Model
      *
      * @var string
      */
-    protected $table = "pedidos";
+    protected $table = "carrinhos";
 
     /**
      * The attributes that are mass assignable.
@@ -23,11 +23,10 @@ class Pedidos extends Model
      * @var array
      */
     protected $fillable = [
-        "data_pedido",
-        "observacao",
-        "forma_pagamento",
+        "quantidade",
         "valor_total",
-        "cliente_id"
+        "produto_id",
+        "pedido_id"
     ];
 
     /**
@@ -36,7 +35,6 @@ class Pedidos extends Model
      * @var array
      */
     protected $dates = [
-        "data_pedido",
         "created_at",
         "updated_at"
     ];
@@ -47,17 +45,26 @@ class Pedidos extends Model
      * @var array
      */
     protected $casts = [
-        "data_pedido" => "date:d/m/Y",
-        "created_at"  => "datetime:d/m/Y H:i"
+        "created_at" => "datetime:d/m/Y H:i"
     ];
 
     /**
-     * Relaciona com modelo de <Clientes>
+     * Relaciona com modelo de <Produtos>
      *
      * @return HasOne
      */
-    public function cliente() : HasOne
+    public function produto() : HasOne
     {
-        return $this->hasOne(Clientes::class, "id", "cliente_id");
+        return $this->hasOne(Produtos::class, "id", "produto_id");
+    }
+
+    /**
+     * Relaciona com modelo de <Pedidos>
+     *
+     * @return HasOne
+     */
+    public function pedido() : HasOne
+    {
+        return $this->hasOne(Pedidos::class, "id", "pedido_id");
     }
 }
