@@ -35,4 +35,20 @@ class ProdutosService
 			throw $th;
 		}
 	}
+
+    /**
+     * Retorna dados do produto pelo id.
+     *
+     * @param Int $id
+     *
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static|null
+     */
+    public function show(int $id)
+    {
+        try {
+            return $this->repository->show($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

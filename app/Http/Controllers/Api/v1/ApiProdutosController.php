@@ -42,4 +42,22 @@ class ApiProdutosController extends Controller
             return ReturnResponse::error("Não foi possível retornar os dados.", ["erro" => $e->getMessage()]);
         }
     }
+
+    /**
+     * Retorna produto pelo ID.
+     *
+     * @param Int $id
+     *
+     * @return JsonResponse
+     */
+    public function show(int $id) : JsonResponse
+    {
+        try {
+            $dados = $this->service->show($id);
+
+            return ReturnResponse::success("Dados retornados com sucesso.", $dados);
+        } catch (\Exception $e) {
+            return ReturnResponse::error("Não foi possível retornar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
 }
