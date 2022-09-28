@@ -9,6 +9,7 @@ use App\Services\Carrinhos\CarrinhosService;
 use App\Services\Pedidos\PedidosService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiPedidosController extends Controller
 {
@@ -78,16 +79,22 @@ class ApiPedidosController extends Controller
     public function store(Request $request) : JsonResponse
     {
         try {
+            DB::beginTransaction();
+
             $dados = $this->service->store($request);
 
-            $request->merge(["pedido_id" => 1]);
+            $request->merge(["pedido_id" => $dados->id]);
 
             $this->carrinhos_service->store($request);
 
+            DB::commit();
+
             return ReturnResponse::success("Dados cadastrados com sucesso.", $dados);
         } catch (ValidationException $e) {
+            DB::rollBack();
             return ReturnResponse::warning($e->getMessage(), [], $e->getCode());
         } catch (\Exception $e) {
+            DB::rollBack();
             return ReturnResponse::error("Não foi possível cadastrar os dados.", ["erro" => $e->getMessage()]);
         }
     }

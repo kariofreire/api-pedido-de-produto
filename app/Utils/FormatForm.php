@@ -93,6 +93,6 @@ class FormatForm
                 "produto_id" => (int) $produto_id,
                 "pedido_id"  => (int) $request->get("pedido_id")
             ];
-        })->toArray();
+        })->filter()->toArray();
     }
 }
