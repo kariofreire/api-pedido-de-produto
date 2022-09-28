@@ -51,4 +51,20 @@ class CarrinhosService
             throw $th;
         }
     }
+
+    /**
+     * Realiza remoção de um carrinho pela Foreign Key.
+     * 
+     * @param Int $id
+     * 
+     * @return Bool
+     */
+    public function deleteFK(int $id) : bool
+    {
+        try {
+            return $this->repository->deleteFK($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

@@ -21,11 +21,12 @@ interface CarrinhosRepositoryInterface
     public function store(array $data);
 
     /**
-     * Remove um registro pelo ID (Primary Key).
+     * Remove um registro pelo ID (Foregin Key).
      *
      * @param Int $id
+     * @param String $foregin_key
      *
      * @return Bool
      */
-    public function delete(int $id);
+    public function deleteFK(int $id, string $foregin_key = "pedido_id");
 }

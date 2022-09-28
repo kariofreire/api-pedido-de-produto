@@ -73,4 +73,25 @@ class PedidosService
             throw $th;
         }
     }
+
+    /**
+     * Atualiza dados de um pedido.
+     *
+     * @param Request $request
+     * @param Int $id
+     *
+     * @return Bool
+     */
+    public function update(Request $request, int $id)
+    {
+        try {
+            $dados = FormatForm::formatPedidos($request);
+
+            RequestPedidos::validarDados($dados);
+
+            return $this->repository->update($id, $dados);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

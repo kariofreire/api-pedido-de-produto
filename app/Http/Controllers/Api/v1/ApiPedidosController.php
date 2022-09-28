@@ -98,4 +98,37 @@ class ApiPedidosController extends Controller
             return ReturnResponse::error("Não foi possível cadastrar os dados.", ["erro" => $e->getMessage()]);
         }
     }
+
+    /**
+     * Realiza atualizacao de um pedido.
+     * 
+     * @param Request $request
+     * @param Int $id
+     * 
+     * @return JsonResponse
+     */
+    public function update(Request $request, int $id) : JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $dados = $this->service->update($request, $id);
+
+            $request->merge(["pedido_id" => $id]);
+
+            $this->carrinhos_service->deleteFK($id);
+
+            $this->carrinhos_service->store($request);
+
+            DB::commit();
+
+            return ReturnResponse::success("Dados atualizados com sucesso.", $dados);
+        } catch (ValidationException $e) {
+            DB::rollBack();
+            return ReturnResponse::warning($e->getMessage(), [], $e->getCode());
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return ReturnResponse::error("Não foi possível atualizar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
 }
