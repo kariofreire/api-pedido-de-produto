@@ -131,4 +131,30 @@ class ApiPedidosController extends Controller
             return ReturnResponse::error("Não foi possível atualizar os dados.", ["erro" => $e->getMessage()]);
         }
     }
+
+    /**
+     * Realiza exclusão de um pedido.
+     * 
+     * @param Int $id
+     * 
+     * @return JsonResponse
+     */
+    public function delete(int $id) : JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $this->carrinhos_service->deleteFK($id);
+            
+            $dados = $this->service->delete($id);
+
+            DB::commit();
+
+            return ReturnResponse::success("Dados atualizados com sucesso.", $dados);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return ReturnResponse::error("Não foi possível atualizar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
 }

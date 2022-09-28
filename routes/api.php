@@ -40,5 +40,6 @@ Route::prefix("v1")->group(function () {
         Route::get("/{id}", [ApiPedidosController::class, "show"])->name("show");
         Route::post("/", [ApiPedidosController::class, "store"])->name("store");
         Route::put("/{id}", [ApiPedidosController::class, "update"])->name("update");
+        Route::delete("/{id}", [ApiPedidosController::class, "delete"])->name("delete");
     });
 });

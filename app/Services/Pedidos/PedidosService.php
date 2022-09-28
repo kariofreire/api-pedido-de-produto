@@ -94,4 +94,20 @@ class PedidosService
             throw $th;
         }
     }
+
+    /**
+     * Realiza exclusão de um pedido.
+     * 
+     * @param Int $id
+     * 
+     * @return Bool
+     */
+    public function delete(int $id) : bool
+    {
+        try {
+            return $this->repository->delete($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
