@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\ApiClientesController;
+use App\Http\Controllers\Api\v1\ApiPedidosController;
 use App\Http\Controllers\Api\v1\ApiProdutosController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,14 @@ Route::prefix("v1")->group(function () {
         Route::post("/", [ApiProdutosController::class, "store"])->name("store");
         Route::put("/{id}", [ApiProdutosController::class, "update"])->name("update");
         Route::delete("/{id}", [ApiProdutosController::class, "delete"])->name("delete");
+    });
+
+    /** Pedidos */
+    Route::prefix("pedidos")->name("pedidos.")->group(function () {
+        Route::get("/", [ApiPedidosController::class, "index"])->name("index");
+        Route::get("/{id}", [ApiPedidosController::class, "show"])->name("show");
+        Route::post("/", [ApiPedidosController::class, "store"])->name("store");
+        Route::put("/{id}", [ApiPedidosController::class, "update"])->name("update");
+        Route::delete("/{id}", [ApiPedidosController::class, "delete"])->name("delete");
     });
 });
