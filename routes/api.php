@@ -37,6 +37,7 @@ Route::prefix("v1")->group(function () {
     /** Pedidos */
     Route::prefix("pedidos")->name("pedidos.")->group(function () {
         Route::get("/", [ApiPedidosController::class, "index"])->name("index");
+        Route::get("/create", [ApiPedidosController::class, "create"])->name("create");
         Route::get("/{id}", [ApiPedidosController::class, "show"])->name("show");
         Route::post("/", [ApiPedidosController::class, "store"])->name("store");
         Route::put("/{id}", [ApiPedidosController::class, "update"])->name("update");

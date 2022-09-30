@@ -39,6 +39,20 @@ class ClientesService
 	}
 
     /**
+     * Retorna lista de clientes.
+     * 
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]|static
+     */
+    public function all()
+    {
+        try {
+            return $this->repository->all();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
      * Retorna dados do cliente pelo id.
      *
      * @param Int $id

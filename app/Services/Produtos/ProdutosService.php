@@ -40,6 +40,20 @@ class ProdutosService
 	}
 
     /**
+     * Retorna lista de produtos.
+     * 
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function all()
+    {
+        try {
+            return $this->repository->all();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    /**
      * Retorna dados do produto pelo id.
      *
      * @param Int $id

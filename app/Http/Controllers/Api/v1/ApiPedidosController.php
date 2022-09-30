@@ -6,7 +6,9 @@ use App\Exceptions\ValidationException;
 use App\Helpers\ReturnResponse;
 use App\Http\Controllers\Controller;
 use App\Services\Carrinhos\CarrinhosService;
+use App\Services\Clientes\ClientesService;
 use App\Services\Pedidos\PedidosService;
+use App\Services\Produtos\ProdutosService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,21 +18,36 @@ class ApiPedidosController extends Controller
     /** @var PedidosService $service */
     protected PedidosService $service;
 
-    /** @var CarrinhosService $service */
+    /** @var CarrinhosService $carrinhos_service */
     protected CarrinhosService $carrinhos_service;
+    
+    /** @var ClientesService $clientes_service */
+    protected ClientesService $clientes_service;
+
+    /** @var ProdutosService $produtos_service */
+    protected ProdutosService $produtos_service;
 
     /**
      * Define o Service utilizado neste Controller.
      *
      * @param PedidosService $pedidosService
      * @param CarrinhosService $carrinhosService
+     * @param ClientesService $clientesService
+     * @param ProdutosService $produtosService
      *
      * @return Void
      */
-    public function __construct(PedidosService $pedidosService, CarrinhosService $carrinhosService)
+    public function __construct(
+        PedidosService $pedidosService,
+        CarrinhosService $carrinhosService,
+        ClientesService $clientesService,
+        ProdutosService $produtosService
+    )
     {
-        $this->service = $pedidosService;
+        $this->service           = $pedidosService;
         $this->carrinhos_service = $carrinhosService;
+        $this->clientes_service  = $clientesService;
+        $this->produtos_service  = $produtosService;
     }
 
     /**
@@ -62,6 +79,25 @@ class ApiPedidosController extends Controller
     {
         try {
             $dados = $this->service->show($id);
+
+            return ReturnResponse::success("Dados retornados com sucesso.", $dados);
+        } catch (\Exception $e) {
+            return ReturnResponse::error("Não foi possível retornar os dados.", ["erro" => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Retorna lista de dados necessário para cadastrar um pedido.
+     * 
+     * @return JsonResponse
+     */
+    public function create() : JsonResponse
+    {
+        try {
+            $dados = [
+                "clientes" => $this->clientes_service->all(),
+                "produtos" => $this->produtos_service->all()
+            ];
 
             return ReturnResponse::success("Dados retornados com sucesso.", $dados);
         } catch (\Exception $e) {
