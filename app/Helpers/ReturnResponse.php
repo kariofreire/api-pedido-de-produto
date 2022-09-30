@@ -12,7 +12,6 @@ abstract class ReturnResponse
      *
      * @param String $message
      * @param \Illuminate\Database\Eloquent\Collection|static[] $data
-     * @param Int $count
      * @param Int $code
      *
      * @return JsonResponse
@@ -31,7 +30,6 @@ abstract class ReturnResponse
      *
      * @param String $message
      * @param \Illuminate\Database\Eloquent\Collection|static[] $data
-     * @param Int $count
      * @param Int $code
      *
      * @return JsonResponse
@@ -50,7 +48,6 @@ abstract class ReturnResponse
      *
      * @param String $message
      * @param \Illuminate\Database\Eloquent\Collection|static[] $data
-     * @param Int $count
      * @param Int $code
      *
      * @return JsonResponse
