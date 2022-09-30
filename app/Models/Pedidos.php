@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Pedidos extends Model
@@ -59,5 +60,15 @@ class Pedidos extends Model
     public function cliente() : HasOne
     {
         return $this->hasOne(Clientes::class, "id", "cliente_id");
+    }
+
+    /**
+     * Relaciona com o modelo de <Carrinhos>
+     * 
+     * @return HasMany
+     */
+    public function carrinhos() : HasMany
+    {
+        return $this->hasMany(Carrinhos::class, "pedido_id", "id")->with("produto");
     }
 }

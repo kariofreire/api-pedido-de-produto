@@ -32,7 +32,7 @@ class PedidosRepository implements PedidosRepositoryInterface
 	{
 		$query = $this->entity::query();
 
-		return $query->orderBy("id")->paginate(10);
+		return $query->with(["cliente", "carrinhos"])->orderBy("id")->paginate(10);
 	}
 
 	/**
@@ -54,7 +54,11 @@ class PedidosRepository implements PedidosRepositoryInterface
      */
     public function show(int $id)
 	{
-		return $this->entity::query()->find($id);
+        try {
+            return $this->entity::query()->with(["cliente", "carrinhos"])->findOrFail($id);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 	}
 
     /**
@@ -79,7 +83,11 @@ class PedidosRepository implements PedidosRepositoryInterface
      */
     public function update(int $id, array $data)
 	{
-		return $this->entity::query()->find($id)->update($data);
+        try {
+            return $this->entity::query()->findOrFail($id)->update($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 	}
 
 	/**
@@ -91,6 +99,10 @@ class PedidosRepository implements PedidosRepositoryInterface
      */
     public function delete(int $id)
 	{
-		return $this->entity::query()->find($id)->delete();
+        try {
+            return $this->entity::query()->findOrFail($id)->delete();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 	}
 }
