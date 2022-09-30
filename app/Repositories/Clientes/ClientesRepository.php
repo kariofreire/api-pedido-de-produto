@@ -54,7 +54,7 @@ class ClientesRepository implements ClientesRepositoryInterface
      */
     public function show(int $id)
 	{
-		return $this->entity::query()->find($id);
+		return $this->entity::query()->findOrFail($id);
 	}
 
     /**
@@ -79,7 +79,7 @@ class ClientesRepository implements ClientesRepositoryInterface
      */
     public function update(int $id, array $data)
 	{
-		return $this->entity::query()->find($id)->update($data);
+		return $this->entity::query()->findOrFail($id)->update($data);
 	}
 
 	/**
@@ -91,6 +91,6 @@ class ClientesRepository implements ClientesRepositoryInterface
      */
     public function delete(int $id)
 	{
-		return $this->entity::query()->find($id)->delete();
+        return $this->entity::query()->findOrFail($id)->delete();
 	}
 }
